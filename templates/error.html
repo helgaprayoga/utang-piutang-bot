@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}{{ judul }} — Utang-Piutang{% endblock %}
+
+{% block content %}
+<section class="message-card">
+    <span class="brand-mark brand-mark-large">UP</span>
+    <p class="eyebrow">Dashboard Utang-Piutang</p>
+    <h1>{{ judul }}</h1>
+    <p class="message-copy">{{ pesan }}</p>
+    <p class="message-hint">
+        Link dashboard dibuat dari chat pribadi bot dan hanya berlaku
+        sementara. Pastikan perangkat berada di Wi-Fi yang sama dengan
+        komputer server.
+    </p>
+</section>
+{% endblock %}

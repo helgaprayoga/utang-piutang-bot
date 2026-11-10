@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard — Utang-Piutang{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div>
+        <p class="eyebrow">Ringkasan pribadi</p>
+        <h1>Utang &amp; piutang kamu</h1>
+        <p class="hero-copy">
+            Halo, {{ nama }}. Semua angka di bawah berasal dari catatan
+            terbaru di bot dan diperbarui otomatis.
+        </p>
+    </div>
+    <div class="hero-actions">
+        <span id="status-perbarui" class="status-pill">Memuat data...</span>
+        <button id="tombol-refresh" class="button button-secondary" type="button">
+            Muat ulang
+        </button>
+    </div>
+</section>
+
+<section class="summary-grid" aria-label="Ringkasan keuangan">
+    <article class="summary-card summary-piutang">
+        <span class="summary-label">Piutang aktif</span>
+        <strong id="ringkasan-piutang" class="summary-value">Rp0</strong>
+        <span class="summary-note">Orang lain utang ke kamu</span>
+    </article>
+    <article class="summary-card summary-utang">
+        <span class="summary-label">Utang aktif</span>
+        <strong id="ringkasan-utang" class="summary-value">Rp0</strong>
+        <span class="summary-note">Kamu utang ke orang lain</span>
+    </article>
+    <article class="summary-card summary-saldo">
+        <span class="summary-label">Saldo bersih</span>
+        <strong id="ringkasan-saldo" class="summary-value">Rp0</strong>
+        <span class="summary-note">Piutang dikurangi utang</span>
+    </article>
+    <article class="summary-card summary-dibayar">
+        <span class="summary-label">Sudah dibayar</span>
+        <strong id="ringkasan-dibayar" class="summary-value">Rp0</strong>
+        <span class="summary-note" id="ringkasan-catatan">0 catatan aktif</span>
+    </article>
+</section>
+
+<section class="section-block">
+    <div class="split-grid">
+        <article class="panel">
+            <div class="panel-heading">
+                <h3>Jatuh tempo terdekat</h3>
+                <span class="panel-note">30 hari ke depan</span>
+            </div>
+            <div id="daftar-jatuh-tempo" class="attention-list">
+                <p class="empty-note">Belum ada jatuh tempo terdekat.</p>
+            </div>
+        </article>
+
+        <article class="panel">
+            <div class="panel-heading">
+                <h3>Catatan telat</h3>
+                <span class="panel-note">Perlu ditindaklanjuti</span>
+            </div>
+            <div id="daftar-telat" class="attention-list">
+                <p class="empty-note">Tidak ada catatan telat.</p>
+            </div>
+        </article>
+    </div>
+</section>
+
+<section class="section-block">
+    <div class="panel">
+        <div class="panel-heading panel-heading-wrap">
+            <div>
+                <p class="eyebrow">Catatan</p>
+                <h2>Semua utang dan piutang</h2>
+            </div>
+            <div class="filters">
+                <label class="field">
+                    <span>Status</span>
+                    <select id="filter-status">
+                        <option value="aktif">Aktif</option>
+                        <option value="lunas">Lunas</option>
+                        <option value="semua">Semua</option>
+                    </select>
+                </label>
+                <label class="field">
+                    <span>Tipe</span>
+                    <select id="filter-tipe">
+                        <option value="semua">Semua</option>
+                        <option value="piutang">Piutang</option>
+                        <option value="utang">Utang</option>
+                    </select>
+                </label>
+                <label class="field field-search">
+                    <span>Cari nama</span>
+                    <input id="filter-cari" type="search" placeholder="Nama orang...">
+                </label>
+            </div>
+        </div>
+
+        <div class="table-meta">
+            <span id="jumlah-catatan">0 catatan</span>
+        </div>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nama</th>
+                        <th>Tipe</th>
+                        <th>Jumlah</th>
+                        <th>Sisa</th>
+                        <th>Jatuh tempo</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="tabel-catatan">
+                    <tr>
+                        <td colspan="8" class="empty-cell">Memuat catatan...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<section class="section-block">
+    <div class="panel">
+        <div class="panel-heading">
+            <h3>Pembayaran terbaru</h3>
+            <span class="panel-note">10 pembayaran terakhir</span>
+        </div>
+        <div id="daftar-pembayaran" class="payment-list">
+            <p class="empty-note">Belum ada pembayaran.</p>
+        </div>
+    </div>
+</section>
+
+<dialog id="modal-detail" class="modal">
+    <div class="modal-head">
+        <div>
+            <p class="eyebrow">Detail catatan</p>
+            <h2 id="detail-judul">Catatan</h2>
+        </div>
+        <button id="tombol-tutup-detail" class="button button-secondary" type="button">
+            Tutup
+        </button>
+    </div>
+    <div id="detail-isi" class="modal-body">
+        <p class="empty-note">Memuat detail...</p>
+    </div>
+</dialog>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='vendor/chart.umd.min.js') }}"></script>
+<script src="{{ url_for('static', filename='dashboard.js') }}"></script>
+{% endblock %}

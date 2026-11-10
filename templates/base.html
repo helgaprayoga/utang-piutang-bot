@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="referrer" content="no-referrer">
+    <title>{% block title %}Dashboard Utang-Piutang{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="app-shell">
+        <header class="topbar">
+            <a class="brand" href="{{ url_for('index') }}">
+                <span class="brand-mark">UP</span>
+                <span class="brand-text">
+                    <strong>Utang-Piutang</strong>
+                    <small>Dashboard pribadi</small>
+                </span>
+            </a>
+
+            {% if session.get('chat_id') %}
+            <div class="user-area">
+                <span class="user-name">{{ session.get('nama') or 'Pengguna' }}</span>
+                <a class="ghost-link" href="{{ url_for('logout') }}">Keluar</a>
+            </div>
+            {% endif %}
+        </header>
+
+        <main class="page">
+            {% block content %}{% endblock %}
+        </main>
+
+        <footer class="footer">
+            Data dashboard hanya bisa dibaca oleh pemilik akun Telegram.
+        </footer>
+    </div>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

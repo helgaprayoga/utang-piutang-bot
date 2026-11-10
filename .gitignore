@@ -1,0 +1,11 @@
+venv/
+.env
+data.db
+data.db.bak*
+data.db-wal
+data.db-shm
+__pycache__/
+.pytest_cache/
+rekap.xlsx
+rekap.docx
+grafik.png
